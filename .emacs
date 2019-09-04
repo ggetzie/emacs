@@ -1,20 +1,43 @@
-
-(require 'cl)
+;;(require 'cl)
 (defvar *emacs-load-start* (current-time))
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
 
 (add-to-list 'load-path "/home/gabe/emacs/")
+(add-to-list 'load-path "/home/gabe/emacs/yaml-mode")
+(add-to-list 'load-path "/home/gabe/emacs/typescript-mode")
 (add-to-list 'load-path "/home/gabe/emacs/markdown-mode/")
 (add-to-list 'load-path "/home/gabe/slime/")
-(add-to-list 'load-path "/usr/local/src/ucw-boxset/dep/slime")
-(add-to-list 'load-path "/usr/local/src/ucw-boxset/dep/slime/contrib")
+;; (add-to-list 'load-path "/usr/local/src/ucw-boxset/dep/slime")
+;; (add-to-list 'load-path "/usr/local/src/ucw-boxset/dep/slime/contrib")
 (add-to-list 'load-path "/home/gabe/emacs/pony-mode")
 (add-to-list 'load-path "/home/gabe/emacs/scss-mode")
+;; (add-to-list 'load-path "/home/gabe/emacs/auto-resize-emacs")
 
-(require 'pony-mode)
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (url (concat (if no-ssl "http" "https") "://melpa.org/packages/")))
+  (add-to-list 'package-archives (cons "melpa" url) t))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) 
 
-(set-default-font "-*-fixed-medium-r-*-*-14-*-*-*-*-*-iso8859-*")
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-hook 'yaml-mode-hook
+      '(lambda ()
+	 (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+(require 'typescript-mode)
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+;; (require 'pony-mode)
+;; (require 'auto-resize)
+
+;; (set-default-font "-*-fixed-medium-r-*-*-20-*-*-*-*-*-iso8859-*")
+(set-face-attribute 'default (selected-frame) :height 130)
 
 (setq-default fill-column 80)
 (setq-default py-indent-offset 4)
@@ -38,7 +61,7 @@
 (global-set-key [(control insert)] 'clipboard-kill-ring-save)
 (global-set-key [(shift insert)] 'clipboard-yank)
 (global-set-key [f5] 'call-last-kbd-macro)
-(global-set-key [f12] 'slime-selector)
+;; (global-set-key [f12] 'slime-selector)
 
 ;; link some more modes to file extensions
 
@@ -46,7 +69,7 @@
 
 ;; javascript mode, set number mode
 (autoload 'javascript-mode "javascript" nil t)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 (autoload 'setnu-mode "setnu" nil t)
 (autoload 'turn-on-setnu-mode "setnu" nil t)
 (add-hook 'javascript-mode-hook 'turn-on-setnu-mode)
@@ -68,24 +91,24 @@
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 ;; configure slime mode
-;;(require 'slime)
-(autoload 'slime-selector "slime" t)
-(eval-after-load "slime"
-  '(progn
-    (setq inferior-lisp-program "sbcl"
-     lisp-indent-function 'common-lisp-indent-function
-     common-lisp-hyperspec-root "http://www.lispworks.com/documentation/HyperSpec/")
+;; (require 'slime)
+;; (autoload 'slime-selector "slime" t)
+;; (eval-after-load "slime"
+;;   '(progn
+;;     (setq inferior-lisp-program "sbcl"
+;;      lisp-indent-function 'common-lisp-indent-function
+;;      common-lisp-hyperspec-root "http://www.lispworks.com/documentation/HyperSpec/")
 
-    (slime-setup)
-    (define-key slime-mode-map "\M-o" 'slime-eval-buffer)
-    (define-key slime-mode-map "\C-x\q" 'slime-quit-lisp)
-    (define-key slime-repl-mode-map "\C-x\q" 'slime-quit-lisp)))
+;;     (slime-setup)
+;;     (define-key slime-mode-map "\M-o" 'slime-eval-buffer)
+;;     (define-key slime-mode-map "\C-x\q" 'slime-quit-lisp)
+;;     (define-key slime-repl-mode-map "\C-x\q" 'slime-quit-lisp)))
 
-(add-hook 'slime-load-hook (lambda () (require 'slime-fancy)))
-(add-hook 'lisp-mode-hook 'turn-on-setnu-mode)
-(add-hook 'inferior-lisp-mode-hook 'turn-on-setnu-mode)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;; (add-hook 'slime-load-hook (lambda () (require 'slime-fancy)))
+;; (add-hook 'lisp-mode-hook 'turn-on-setnu-mode)
+;; (add-hook 'inferior-lisp-mode-hook 'turn-on-setnu-mode)
+;; (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
@@ -142,11 +165,17 @@ the mode-line."
 
 (setenv "PYTHONPATH" "/home/gabe/python/:.")
 
+
+
+
 ;; start working!
 (split-window-horizontally)
-(dired "/usr/local/src/kotsf/")
-(dired "/usr/local/src/prophit_dev/prophit_main_repo/")
-(shell "pyserver")
-(shell "pyshell")
+;; (dired "/usr/local/src/kotsf/")
+(dired "/usr/local/src/aeq/")
+(dired "/usr/local/src/aeq/aeq/templates/")
+(dired "/usr/local/src/aeq/aeq/static/")
+;; (dired "/usr/local/src/prophit_dev/prophit_main_repo/")
+;; (shell "pyserver")
+;; (shell "pyshell")
 (balance-windows)
 
