@@ -60,7 +60,7 @@
 
 ;; ----------------------------------------------------------------------------
 
-(require 'cl); for set-difference and loop
+(require 'cl-lib); for set-difference and loop
 
 (defun window-number-list ()
   "Returns a list of the windows, in fixed order and the
