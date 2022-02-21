@@ -1,0 +1,3 @@
+[submodule "ledger-mode"]
+	path = ledger-mode
+	url = git@github.com:ledger/ledger-mode.git
