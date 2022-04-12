@@ -13,3 +13,6 @@
 [submodule "typescript-mode"]
 	path = typescript-mode
 	url = https://github.com/emacs-typescript/typescript.el.git
+[submodule "yaml-mode"]
+	path = yaml-mode
+	url = git@github.com:yoshiki/yaml-mode.git
