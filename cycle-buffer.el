@@ -341,7 +341,7 @@ A prefix argument specifies the DISTANCE to skip, negative moves back."
         (setq s (concat (substring s 0 (match-beginning 0))
                         (substring s (match-end 0))))
       (setq s (copy-sequence s)))       ; else the loop below is destructive
-    (loop for i below (length s)
+    (cl-loop for i below (length s)
           do (if (eq (aref s i) ? ) (aset s i ?_)))
     (setq len (length s))
     (if (> len cycle-buffer-show-length)

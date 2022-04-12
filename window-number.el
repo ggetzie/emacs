@@ -66,7 +66,7 @@
   "Returns a list of the windows, in fixed order and the
 minibuffer (even if not active) last."
   (let* ((walk-windows-start
-          (car (set-difference
+          (car (cl-set-difference
                 (window-list (selected-frame) t)
                 (window-list (selected-frame) 1))))
          (walk-windows-current walk-windows-start)
@@ -109,7 +109,7 @@ minibuffer (even if not active) last."
 
 (defmacro window-number-define-keys (mode-map prefix)
   `(progn 
-     ,@(loop for number from 1 to 10 collect
+     ,@(cl-loop for number from 1 to 10 collect
              `(define-key ,mode-map 
                 (kbd ,(concat prefix (number-to-string 
                                       (if (>= number 10) 0 number))))
