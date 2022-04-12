@@ -6,7 +6,7 @@
 	url = git@github.com:MatthewBregg/auto-resize-emacs.git
 [submodule "markdown-mode"]
 	path = markdown-mode
-	url = git://jblevins.org/git/markdown-mode.git
+	url = https://github.com/jrblevin/markdown-mode.git
 [submodule "scss-mode"]
 	path = scss-mode
 	url = https://github.com/antonj/scss-mode.git
