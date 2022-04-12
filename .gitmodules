@@ -16,3 +16,6 @@
 [submodule "markdown-mode"]
 	path = markdown-mode
 	url = https://github.com/jrblevin/markdown-mode.git
+[submodule "use-package"]
+	path = use-package
+	url = git@github.com:jwiegley/use-package.git
