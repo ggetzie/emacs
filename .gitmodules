@@ -1,3 +1,15 @@
 [submodule "ledger-mode"]
 	path = ledger-mode
 	url = git@github.com:ledger/ledger-mode.git
+[submodule "auto-resize-emacs"]
+	path = auto-resize-emacs
+	url = git@github.com:MatthewBregg/auto-resize-emacs.git
+[submodule "markdown-mode"]
+	path = markdown-mode
+	url = git://jblevins.org/git/markdown-mode.git
+[submodule "scss-mode"]
+	path = scss-mode
+	url = https://github.com/antonj/scss-mode.git
+[submodule "typescript-mode"]
+	path = typescript-mode
+	url = https://github.com/emacs-typescript/typescript.el.git
