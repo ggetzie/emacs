@@ -4,9 +4,6 @@
 [submodule "auto-resize-emacs"]
 	path = auto-resize-emacs
 	url = git@github.com:MatthewBregg/auto-resize-emacs.git
-[submodule "markdown-mode"]
-	path = markdown-mode
-	url = https://github.com/jrblevin/markdown-mode.git
 [submodule "scss-mode"]
 	path = scss-mode
 	url = https://github.com/antonj/scss-mode.git
@@ -16,3 +13,6 @@
 [submodule "yaml-mode"]
 	path = yaml-mode
 	url = git@github.com:yoshiki/yaml-mode.git
+[submodule "markdown-mode"]
+	path = markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git
